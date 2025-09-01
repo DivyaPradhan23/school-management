@@ -19,12 +19,12 @@ export async function POST(req) {
     const buffer = Buffer.from(bytes);
     const filename = Date.now() + "-" + file.name;
 
-    const uploadDir = path.join(process.cwd(), "public", "school");
+    const uploadDir = path.join(process.cwd(), "public", "schoolImages");
     await fs.mkdir(uploadDir, { recursive: true });
     await fs.writeFile(path.join(uploadDir, filename), buffer);
 
     // ✅ Save relative path instead of filename only
-    const imagePath = `${filename}`;
+    const imagePath = `schoolImages/${filename}`;
 
     // Save data to DB
     const [result] = await db.query(
@@ -60,8 +60,9 @@ export async function GET() {
 
     const schools = rows.map((school) => ({
       ...school,
-      image: school.image
+      image: `/schoolImages/${school.image}`, // ✅ correct
     }));
+
 
     return Response.json({
       schools,
