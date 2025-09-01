@@ -53,18 +53,24 @@ export async function POST(req) {
 
 export async function GET() {
   try {
-    // fetch all schools
     const [rows] = await db.query("SELECT * FROM schools ORDER BY id DESC");
-
-    // fetch total count
     const [countResult] = await db.query("SELECT COUNT(*) AS total FROM schools");
 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://school-management-production-f2e7.up.railway.app";
+
+    const schools = rows.map((school) => ({
+      ...school,
+      image: `${baseUrl}/schoolImages/${school.image}`,
+    }));
+
     return Response.json({
-      schools: rows,
+      schools,
       total: countResult[0].total,
     });
   } catch (error) {
     console.error("Error in GET /api/schools:", error);
     return new Response(JSON.stringify({ error: error.stack }), { status: 500 });
   }
+}
+
 }
