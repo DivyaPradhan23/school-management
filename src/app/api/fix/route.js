@@ -4,7 +4,7 @@ export async function GET() {
   try {
     await db.query(`
       ALTER TABLE schools 
-      MODIFY id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+      MODIFY id INT NOT NULL AUTO_INCREMENT 
     `);
 
     return Response.json({ message: "✅ Table fixed: id is now AUTO_INCREMENT" });
