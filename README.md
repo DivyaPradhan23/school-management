@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# School Management System
 
-## Getting Started
+A mini-project built with **Next.js** and **MySQL** for managing school data. The project consists of two main pages:  
 
-First, run the development server:
+1. **Add School** – To input and store school data.  
+2. **Show Schools** – To display the list of schools like an e-commerce product listing.  
+
+---
+
+## Table of Contents
+
+- [Features](#features)  
+- [Tech Stack](#tech-stack)  
+- [Database](#database)  
+- [Pages](#pages)  
+- [Setup & Installation](#setup--installation)  
+- [Deployment](#deployment)  
+
+---
+
+## Features
+
+- Add new school with details: name, address, city, state, contact, email, and image.  
+- Input validation using **react-hook-form** (required fields, email format, 10-digit phone number).  
+- Store school images in `public/schoolImages` folder.  
+- Display schools with image, name, address, and city.  
+- Responsive design for desktop and mobile.  
+
+---
+
+## Tech Stack
+
+- **Frontend:** Next.js (React)  
+- **Backend:** Node.js API routes  
+- **Database:** MySQL  
+- **Form Validation:** react-hook-form  
+- **Styling:** Tailwind CSS  
+
+---
+
+## Database
+
+MySQL Table: `schools`
+
+| Column      | Type          | Description                       |
+|------------ |-------------- |---------------------------------- |
+| id         | INT AUTO_INCREMENT | Primary Key                     |
+| name       | TEXT           | School Name                       |
+| address    | TEXT           | School Address                    |
+| city       | TEXT           | City                               |
+| state      | TEXT           | State                              |
+| contact    | BIGINT         | Contact Number (10 digits)        |
+| email_id   | TEXT           | Email ID                           |
+| image      | TEXT           | File name of uploaded image        |
+
+---
+
+## Pages
+
+### 1. Add School (`addSchool.jsx`)
+
+- Form fields: Name, Address, City, State, Contact, Email, Image  
+- Validations: Required fields, valid email, 10-digit contact number  
+- Image upload stored in: `public/schoolImages`  
+- Responsive layout  
+
+### 2. Show Schools (`showSchools.jsx`)
+
+- Displays all schools from the database  
+- Shows: Image, Name, Address, City  
+- Styled similar to e-commerce product listings  
+- Responsive layout  
+
+---
+
+## Setup & Installation
+
+1. **Clone the repo**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+git clone https://github.com/DivyaPradhan23/school-management.git
+cd school-management

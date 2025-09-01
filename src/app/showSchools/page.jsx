@@ -13,46 +13,40 @@ export default function ShowSchools() {
 
 
  return (
-  <div className="p-6 max-w-6xl mx-auto">
-    <div className="flex justify-between items-center mb-6">
-      <h1 className="text-2xl font-bold text-gray-600">Schools</h1>
+    <div className="p-6 max-w-7xl mx-auto">
+      {/* Header with Add button */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-gray-700">Schools</h1>
         <Link
           href="/addSchool"
-          className="bg-blue-400 text-white px-4 py-2 rounded hover:bg-blue-500"
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600"
         >
-          Add School
+          + Add School
         </Link>
-    </div>
+      </div>
 
-    <div className="overflow-x-auto">
-      <table className="min-w-full bg-white border rounded-lg">
-        <thead>
-          <tr className="bg-gray-500 text-left">
-            <th className="py-2 px-4 border-b">Name</th>
-            <th className="py-2 px-4 border-b">Address</th>
-            <th className="py-2 px-4 border-b">City</th>
-            <th className="py-2 px-4 border-b">Image</th>
-          </tr>
-        </thead>
-        <tbody>
-          {schools.map((school) => (
-            <tr key={school.id} className="text-gray-600 hover:bg-gray-100">
-              <td className="py-2 px-4 border-b">{school.name}</td>
-              <td className="py-2 px-4 border-b">{school.address}</td>
-              <td className="py-2 px-4 border-b">{school.city}</td>
-              <td className="py-2 px-4 border-b">
-                <img
-                  src={`/schoolImages/${school.image}`}
-                  alt={school.name}
-                  className="w-20 h-20 object-cover rounded"
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {/* Grid cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {schools.map((school) => (
+          <div
+            key={school.id}
+            className="bg-white border rounded-lg shadow-md hover:shadow-lg transition p-4 flex flex-col"
+          >
+            <img
+              src={`/schoolImages/${school.image}`}
+              alt={school.name}
+              className="w-full h-40 object-cover rounded-lg mb-3"
+            />
+            <h2 className="font-semibold text-lg text-gray-800 mb-1">
+              {school.name}
+            </h2>
+            <p className="text-gray-600 text-sm">{school.address}</p>
+            <p className="text-gray-500 text-sm mb-2">{school.city}</p>
+
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
 
 }
