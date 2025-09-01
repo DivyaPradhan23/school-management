@@ -60,7 +60,7 @@ export async function GET() {
 
     const schools = rows.map((school) => ({
       ...school,
-      image: `/schoolImages/${school.image}`, // ✅ correct
+      image: school.image // ✅ correct
     }));
 
 
