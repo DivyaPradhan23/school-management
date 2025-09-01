@@ -33,7 +33,7 @@ export default function ShowSchools() {
             className="bg-white border rounded-lg shadow-md hover:shadow-lg transition p-4 flex flex-col"
           >
             <img
-             src={`${school.image}`}
+             src={school.image}
               alt={school.name}
               className="w-full h-40 object-cover rounded-lg mb-3"
             />
