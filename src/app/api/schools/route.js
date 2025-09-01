@@ -14,16 +14,25 @@ export async function POST(req) {
     const email_id = formData.get("email_id");
     const file = formData.get("file");
 
-    // Save image in public/schoolImages
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    const filename = Date.now() + "-" + file.name;
+    let filename = null;
 
-    const uploadDir = path.join(process.cwd(), "public", "schoolImages");
-    await fs.mkdir(uploadDir, { recursive: true });
-    await fs.writeFile(path.join(uploadDir, filename), buffer);
+    if (file) {
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+      filename = Date.now() + "-" + file.name;
 
-    // Save data to DB
+      if (!process.env.VERCEL) {
+        // ✅ Local development → save file to /public/schoolImages
+        const uploadDir = path.join(process.cwd(), "public", "schoolImages");
+        await fs.mkdir(uploadDir, { recursive: true });
+        await fs.writeFile(path.join(uploadDir, filename), buffer);
+      } else {
+        // ✅ On Vercel → skip saving, later replace with Cloudinary
+        console.log("⚠️ Skipping local file save on Vercel.");
+      }
+    }
+
+    // Save data to DB (store filename or NULL)
     const [result] = await db.query(
       "INSERT INTO schools (name, address, city, state, contact, image, email_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [name, address, city, state, contact, filename, email_id]
@@ -31,16 +40,14 @@ export async function POST(req) {
 
     return new Response(JSON.stringify({ id: result.insertId }), { status: 201 });
   } catch (error) {
+    console.error("Error in POST /api/schools:", error);
     return new Response(JSON.stringify({ error: error.message }), { status: 500 });
   }
 }
 
 export async function GET() {
   try {
-    // fetch all schools
     const [rows] = await db.query("SELECT * FROM schools ORDER BY id DESC");
-
-    // fetch total count
     const [countResult] = await db.query("SELECT COUNT(*) AS total FROM schools");
 
     return Response.json({
@@ -48,8 +55,7 @@ export async function GET() {
       total: countResult[0].total,
     });
   } catch (error) {
-    console.error("Error in POST /api/schools:", error);
+    console.error("Error in GET /api/schools:", error);
     return new Response(JSON.stringify({ error: error.stack }), { status: 500 });
   }
 }
-
