@@ -1,4 +1,3 @@
-You said:
 import db from "@/lib/db";
 import { promises as fs } from "fs";
 import path from "path";
@@ -24,14 +23,30 @@ export async function POST(req) {
     await fs.mkdir(uploadDir, { recursive: true });
     await fs.writeFile(path.join(uploadDir, filename), buffer);
 
+    // ✅ Save relative path instead of filename only
+    const imagePath = `/schoolImages/${filename}`;
+
     // Save data to DB
     const [result] = await db.query(
       "INSERT INTO schools (name, address, city, state, contact, image, email_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [name, address, city, state, contact, filename, email_id]
+      [name, address, city, state, contact, imagePath, email_id]
     );
 
-    return new Response(JSON.stringify({ id: result.insertId }), { status: 201 });
+    return new Response(
+      JSON.stringify({
+        id: result.insertId,
+        name,
+        address,
+        city,
+        state,
+        contact,
+        email_id,
+        image: imagePath,
+      }),
+      { status: 201 }
+    );
   } catch (error) {
+    console.error("Error in POST /api/schools:", error);
     return new Response(JSON.stringify({ error: error.message }), { status: 500 });
   }
 }
@@ -49,7 +64,7 @@ export async function GET() {
       total: countResult[0].total,
     });
   } catch (error) {
-    console.error("Error in POST /api/schools:", error);
+    console.error("Error in GET /api/schools:", error);
     return new Response(JSON.stringify({ error: error.stack }), { status: 500 });
   }
 }
