@@ -43,9 +43,6 @@ export default function ShowSchools() {
             <p className="text-gray-600 text-sm">{school.address}</p>
             <p className="text-gray-500 text-sm mb-2">{school.city}</p>
 
-            <button className="mt-auto bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600 transition">
-              View Details
-            </button>
           </div>
         ))}
       </div>
