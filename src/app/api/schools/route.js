@@ -48,7 +48,8 @@ export async function GET() {
       total: countResult[0].total,
     });
   } catch (error) {
-    return Response.json({ error: error.message }, { status: 500 });
+    console.error("Error in POST /api/schools:", error);
+    return new Response(JSON.stringify({ error: error.stack }), { status: 500 });
   }
 }
 
