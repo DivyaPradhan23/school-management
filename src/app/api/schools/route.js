@@ -24,7 +24,7 @@ export async function POST(req) {
     await fs.writeFile(path.join(uploadDir, filename), buffer);
 
     // ✅ Save relative path instead of filename only
-    const imagePath = `schoolImages/${filename}`;
+    const imagePath = `${filename}`;
 
     // Save data to DB
     const [result] = await db.query(
