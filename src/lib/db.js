@@ -1,8 +1,5 @@
 import mysql from "mysql2/promise";
 
-export const db = mysql.createPool({
-  host: "localhost",       
-  user: "root",            
-  password: "Admin123!",   
-  database: "school_db",   
-});
+const connection = mysql.createPool(process.env.DATABASE_URL);
+
+export default connection;
