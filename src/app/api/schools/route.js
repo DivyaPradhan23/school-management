@@ -60,7 +60,7 @@ export async function GET() {
 
     const schools = rows.map((school) => ({
       ...school,
-      image: `${baseUrl}/schoolImages/${school.image}`,
+      image: `${baseUrl}${school.image}`
     }));
 
     return Response.json({
